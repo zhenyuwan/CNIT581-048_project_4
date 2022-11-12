@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Web page for project 2">
+        <meta name="author" content="zhenyu wan">
+        <title>Firewall Practice Tools</title>
+    </head>
+
+    <!-- custom css style sheet for project 1 --> 
+    <link href="{% static 'firewall_rules/css/project1.css' %}" rel="stylesheet">
+    <!-- css style sheet for terminologies page -->
+    <link href="{% static 'firewall_rules/css/terms.css' %}" rel="stylesheet">
+
+    <!--start of the header section-->
+    <div id="demobox">
+        Firewall Detailed View
+    </div>
+    <!--end of the header section-->
+
+
+    <!--start of the nav bar-->
+    <ul id="nav_bar">
+        <li><a href="index">Home Page</a></li>
+        <li><a href="terms">Firewall Terminologies</a></li>
+        <li><a href="subnet_practice">Subnet Practice</a></li>
+        <li><a href="firewall_practice">Firewall Practice</a></li>
+        <li><a href="playground">Playground</a></li>
+    </ul>
+    <!--End of the nav bar-->
+
+    <!--start of Night mode button-->
+    <button id="change_night_mode" type="button" onclick="change_night_mode()">Night</button>
+
+    <p>This is a sample for detailed view</p>
+    <!--Start of firewall rule table-->
+    <div>
+        <table id="myTable">
+            <tr id="first_row">
+                <td>Interface</td>
+                <td>Direction</td>
+                <td>Source Address</td>
+                <td>Destination address</td>
+                <td>Port Number</td>
+                <td>Action</td>
+                <td>Description</td>
+            </tr>
+        </table>
+    </div>
+    
+    <script>
+        window.onload = function() {
+        new_row('{{zone}}','{{direction}}','{{source_address}}','{{destination_address}}','{{port_number}}','{{action}}','{{description}}');
+        };
+    </script>
+    
+
+    <footer>
+        <p>CopyRight © 2022 ACME, Inc.</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="{% static 'firewall_rules/js/main.js' %}"></script>
+    <script src="{% static 'firewall_rules/js/firewall_practice.js' %}"></script>
+</html>

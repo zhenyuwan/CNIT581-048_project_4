@@ -1,0 +1,148 @@
+body {
+    margin: 0px;
+    display: block;
+    min-height: 100%;
+}
+
+#demobox {
+    background-color: rgb(0, 0, 0) ;
+    color:rgb(255, 255, 255);
+    
+    text-align: center;
+    font-size: 30px;
+
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border: none;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  li {
+    display: inline;
+    float: left;
+  }
+
+  li a {
+    display: block;
+    margin-left: 90px;
+    margin-right: 90px;
+    padding: 8px;
+    background-color: #fffefe;
+    color:rgb(87, 50, 222);
+  }
+  
+#instruction{
+    display: block;
+}
+
+p {
+    display: block;
+    margin: 4px;
+    margin-inline-start: 15px;
+}
+
+footer{ 
+    text-align: center;
+    font-size: 10px;
+
+    padding: 3px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    clear: both;
+
+    margin-top: 600px;
+}
+
+.network_diagram{   
+    margin: auto;
+    width: 60%;
+    margin-left: 20%;
+    display: block;
+    float: left;
+}
+
+.input_fields {
+    float: left;
+}
+
+form {
+    margin-left: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+input[type="submit" i] {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px;
+    margin: 0px;
+    background-color: black;
+    color: #fffefe;
+}
+
+label {
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 250px;
+    border: 5px;
+    text-align: right;
+}
+input {
+    display: inline-block;
+    float: left;
+}
+
+
+button {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border: 0px;
+    margin: 0px;
+    background-color: black;
+    color: #fffefe;
+}
+button#new_row{
+    margin-left: 75.26%;
+}
+button#change_night_mode{
+    margin-left: 80%
+}
+
+input {
+    padding: 1px;
+}
+
+table {
+    margin-left: 20%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    width: 50px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+}
+

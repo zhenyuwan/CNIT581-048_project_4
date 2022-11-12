@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Web page for project 2">
+        <meta name="author" content="zhenyu wan">
+        <title>Firewall Practice Tools</title>
+    </head>
+
+    <!-- custom css style sheet for project 1 --> 
+    <link href="{% static 'firewall_rules/css/project1.css' %}" rel="stylesheet">
+    <!-- css style sheet for terminologies page -->
+    <link href="{% static 'firewall_rules/css/terms.css' %}" rel="stylesheet">
+
+    <!--start of the header section-->
+    <div id="demobox">
+        Firewall Terminologies
+    </div>
+    <!--end of the header section-->
+
+
+    <!--start of the nav bar-->
+    <ul id="nav_bar">
+        <li><a href="index">Home Page</a></li>
+        <li><a href="terms">Firewall Terminologies</a></li>
+        <li><a href="subnet_practice">Subnet Practice</a></li>
+        <li><a href="firewall_practice">Firewall Practice</a></li>
+        <li><a href="playground">Playground</a></li>
+    </ul>
+    <!--End of the nav bar-->
+
+    <!--start of Night mode button-->
+    <button id="change_night_mode" type="button" onclick="change_night_mode()">Night</button>
+
+    <h3>Private A/B</h3>
+	<p>Private A/B are machines that are inside the firewall. They will have private addresses, 10.0.0.0 - 10.255.255.255; 172.16.0.0 - 172.31.255.255; 192.168.0.0 - 192.168.255.255</p>
+
+    <h3>External Machine</h3>
+	<p>External Machines are those on the "Internet." They will have any address not in the reserved private address range.</p>
+
+    <h3>Firewall</h3>
+    <p>The firewall in this tool has limited functions. It can filter traffic and act like a simple router. But beware, firewalls in the real world are more capable than what appears in this tool.</p>
+	
+    <h3>Subnet</h3>
+    <p>The subnet is what makes networks today possible, without which we would only have a giant internet. </p>
+	
+    <h3>LAN</h3>
+    <p>LAN refers to Local Area Network. Purdue CIT network, for example, is a LAN network.</p>
+	
+    <h3>WAN</h3>
+    <p>WAN refers to Wide Area Network. Internet is one example of WAN.</p>
+	
+    <h3>DMZ</h3>
+    <p>A DMZ is where an enterprise can put dangerous out-facing services on. Examples of those services include HTTP, SMB, and MySQL</p>
+	
+    <h3>Direction</h3>
+    <p>The direction of the firewall rule can determine the source and destination address. If the firewall rule is applied on the WAN interface, and the direction is IN, the source address will be the address of the public machine while the destination address will be the address of the private machine</p>
+	
+    <h3>Source Address</h3>
+    <p>Source address refers to where the traffic comes from</p>
+	
+    <h3>Destination Address</h3>
+    <p>Destination address refers to where the traffic is going to</p>
+	
+
+    
+    <footer>
+        <p>CopyRight © 2022 ACME, Inc.</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="{% static 'firewall_rules/js/main.js' %}"></script>
+</html>

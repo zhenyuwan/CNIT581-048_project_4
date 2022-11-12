@@ -1,0 +1,4 @@
+<p>This is a sample for ajax</p>
+{% for rule in firewall_rules %}
+<a href="details/firewall_rules/{{ rule.id }}"> {{ rule.id }}</a>
+{% endfor %}

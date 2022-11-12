@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Web page for project 2">
+        <meta name="author" content="zhenyu wan">
+        <title>Firewall Practice Tools</title>
+    </head>
+
+    <!-- custom css style sheet for project 1 --> 
+    <link href="{% static 'firewall_rules/css/project1.css' %}" rel="stylesheet">
+    
+    <!--start of the header section-->
+    <div id="demobox">
+        Subnet Practice
+    </div>
+    <!--end of the header section-->
+
+
+    <!--start of the nav bar-->
+    <ul id="nav_bar">
+        <li><a href="index">Home Page</a></li>
+        <li><a href="terms">Firewall Terminologies</a></li>
+        <li><a href="subnet_practice">Subnet Practice</a></li>
+        <li><a href="firewall_practice">Firewall Practice</a></li>
+        <li><a href="playground">Playground</a></li>
+    </ul>
+    <!--End of the nav bar-->
+    
+    <!--start of Night mode button-->
+    <button id="change_night_mode" type="button" onclick="change_night_mode()">Night</button>
+
+    <!--Start of the instruction-->
+    <div id="instruction" style = "padding-left: 50px;">
+        <p>Fill the box with correct subnet scheme to practice your subnet knowledge</p>
+        <p><br></p>
+        <p>Here is a simple question about how to devide your Network:</p>
+        <p>You are given the 192.168.0.0/24 address space.</p>
+        <p>Divide them evenly across your private networks.</p>
+        <P>Hint: if you don't know the answer, check <a href="js/subnet.js">subnet.js</a></P>
+        <p>The address space for external subnet is 192.168.1.0/24</p>
+    </div>
+    <!--End of the instruction-->
+
+
+    <!--Start of drawing Network Diagram-->
+    <div class="network_diagram">
+        <img src="{% static 'firewall_rules/img/subnet_diagram.png' %}" alt="subnet_diagram">
+        <!--Start of input boxes-->
+        <form>
+            <div id="external_subnet">
+                <label for="esubnet">Enter the external subnet address:</label>
+                <input type="text" id="esubnet" name="esubnet">
+                <button type="submit" onclick="esubnet_result_validate()">Submit</button>
+                <span id="esubnet_result">Example: 127.0.0.0/24</span>
+            </div>
+        </form>
+
+        <form>
+            <div class="private_a">
+                <label for="private_a">Enter the private A subnet address:</label>
+                <input type="text" id="private_a" name="private_a">
+                <button type="submit" onclick="private_a_result_validate()">Submit</button>
+                <span id="private_a_result">Example: 127.0.0.0/24</span>
+            </div>
+        </form>
+
+        <form>
+            <div class="private_b">
+                <label for="private_b">Enter the private B subnet address:</label>
+                <input type="text" id="private_b" name="private_b">
+                <button type="submit" onclick="private_b_result_validate()">Submit</button>
+                <span id="private_b_result">Example: 127.0.0.0/24</span>
+            </div>
+        </form>
+        <!--End of the input boxes-->
+    </div> 
+    <!--End of the drawing Network Diagram-->
+    
+
+    <footer>
+        <p>CopyRight © 2022 ACME, Inc.</p>
+    </footer>
+
+
+    <script src="{% static 'firewall_rules/js/subnet.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="{% static 'firewall_rules/js/main.js' %}"></script>
+</body>
+</html>
