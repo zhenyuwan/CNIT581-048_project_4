@@ -3,9 +3,19 @@ from pyexpat import model
 from turtle import pu
 from unittest.util import _MAX_LENGTH
 from django.db import models
+from django.contrib.auth.models import User
+
+class firewall_practice(models.Model):
+    # has one to many relationship to firewall_rules, route_table, interface, nat_rules
+
+
+    creation_date = models.DateTimeField(auto_now_add=True)
 
 class firewall_rules(models.Model):
     # firewall_rules class, has 10 attributes
+
+    # foreign key will be that of the firewall_practice
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
     
     # zone; define the zone where the rule will be applied
     zone = models.CharField(max_length=40)
@@ -41,10 +51,12 @@ class firewall_rules(models.Model):
     def __str__(self):
         return self.zone + ";" + self.direction + ";" + self.source_ip + ";" + self.source_detail + ";" + self.source_protocol + ";" + self.destination_ip + ";" + self.destination_detail + ";" + self.destination_protocol + ";" + self.description
 
-
 class route_table(models.Model):
     #define the route in the firewall, has four attributes
     
+    # foreign key will be that of the firewall_practice
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
+
     #destination: define the destination network, example:192.168.100.101/24
     destination = models.CharField(max_length=18)
 
@@ -62,6 +74,9 @@ class route_table(models.Model):
 
 class interface(models.Model):
     #interface defines how many interfaces are on the firewall, has 3 attributes
+
+    # foreign key will be that of the firewall_practice
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
 
     #zone: define which interface the traffic would go out
     zone = models.CharField(max_length=40)
@@ -81,6 +96,9 @@ class interface(models.Model):
 
 class nat_rules(models.Model):
     # nat_rules defines the natting rules in the firewall, has 8 attributes
+
+    # foreign key will be that of the firewall_practice
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
 
     # nat_type: define the type of natting, can be either SNAT or DNAT
     # SNAT stands for static nat while DNAT stands for dynamic nat
@@ -110,3 +128,5 @@ class nat_rules(models.Model):
 
     #automatically update when changes
     pub_date = models.DateTimeField('date_published', auto_now=True)
+
+#class 
