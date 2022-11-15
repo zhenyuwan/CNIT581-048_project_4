@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 
 from . import views
 
@@ -16,13 +17,19 @@ urlpatterns = [
 
     path('pages/terms', views.get_page_terms, name='terms'),
 
-    path('pages/firewall_practice', views.get_input_firewall_rules, name='terms'),
+    path('pages/firewall_practice', views.get_input_firewall_rules, name='firewall_practice'),
 
-    path('pages/subnet_practice', views.get_page_subnet_practice, name='terms'),
+    path('pages/subnet_practice', views.get_page_subnet_practice, name='subnet_practice'),
 
-    path('pages/playground', views.get_page_playground, name='terms'),
+    path('pages/playground', views.get_page_playground, name='playground'),
 
     path('pages/output/firewall_rules', views.show_firewall_rules, name='show_rules'),
 
-    path('pages/details/firewall_rules/<int:firewall_rules_id>', views.show_firewall_rules_details, name='details')
+    path('pages/details/firewall_rules/<int:firewall_rules_id>', views.show_firewall_rules_details, name='details'),
+    
+    path('signout/', views.signout, name='signout'),
+
+    path('signup/', views.signup, name='signup'),
+
+    path('signin/', views.signin, name='signin'),
 ]

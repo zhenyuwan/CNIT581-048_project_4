@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Web page for project 2">
+        <meta name="author" content="zhenyu wan">
+        <title>Firewall Practice Tools</title>
+    </head>
+
+    <!-- custom css style sheet for project 1 --> 
+    <link href="{% static 'firewall_rules/css/project1.css' %}" rel="stylesheet">
+    
+    <!--start of the header section-->
+    <div id="demobox">
+        Firewall Practice Tools
+    </div>
+    <!--end of the header section-->
+
+
+    <!--start of the nav bar-->
+    <ul id="nav_bar">
+        <li><a href="{% url 'index' %}">Home Page</a></li>
+        <li><a href="{% url 'terms' %}">Firewall Terminologies</a></li>
+        <li><a href="{% url 'subnet_practice' %}">Subnet Practice</a></li>
+        <li><a href="{% url 'firewall_practice' %}">Firewall Practice</a></li>
+        <li><a href="{% url 'playground' %}">Playground</a></li>
+    </ul>
+    <!--End of the nav bar-->
+
+    <!--start of Night mode button-->
+    <button id="change_night_mode" type="button" onclick="change_night_mode()">Night</button>
+
+    <div class="center_form">
+        {% block user_status %}        
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}.
+            <a href="{% url 'signout' %}">Sign Out</a>
+            </p>
+            {% else %}
+            <form action="{% url 'signin' %}" method="post">
+                {% csrf_token %}
+                <div class="container">
+                  <label for="username"><b>Username</b></label>
+                  <input type="text" placeholder="Enter Username" name="username" required>
+              
+                  <label for="password"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="password" required>
+              
+                  <button type="submit">Login</button>
+                </div>
+            </form>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>CopyRight © 2022 ACME, Inc.</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script src="{% static 'firewall_rules/js/main.js' %}"></script>
+</html>

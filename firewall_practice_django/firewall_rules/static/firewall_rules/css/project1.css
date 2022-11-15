@@ -123,6 +123,9 @@ button#new_row{
 button#change_night_mode{
     margin-left: 80%
 }
+button:hover {
+    opacity: 0.5;
+  }
 
 input {
     padding: 1px;
@@ -144,5 +147,13 @@ table {
   
   tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+
+.center_form{
+    text-align: center;
+}
+.container{
+    padding: 16px;
 }
 

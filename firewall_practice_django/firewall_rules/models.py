@@ -5,9 +5,13 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
 
+class User(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, default=None)
+    def __str__(self):
+        return "ID:" + str(self.id) + ";" + str(self.user.email)    
+
 class firewall_practice(models.Model):
     # has one to many relationship to firewall_rules, route_table, interface, nat_rules
-
 
     creation_date = models.DateTimeField(auto_now_add=True)
 
@@ -15,7 +19,7 @@ class firewall_rules(models.Model):
     # firewall_rules class, has 10 attributes
 
     # foreign key will be that of the firewall_practice
-    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE, null=True)
     
     # zone; define the zone where the rule will be applied
     zone = models.CharField(max_length=40)
@@ -55,7 +59,7 @@ class route_table(models.Model):
     #define the route in the firewall, has four attributes
     
     # foreign key will be that of the firewall_practice
-    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE, null=True)
 
     #destination: define the destination network, example:192.168.100.101/24
     destination = models.CharField(max_length=18)
@@ -76,7 +80,7 @@ class interface(models.Model):
     #interface defines how many interfaces are on the firewall, has 3 attributes
 
     # foreign key will be that of the firewall_practice
-    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE, null=True)
 
     #zone: define which interface the traffic would go out
     zone = models.CharField(max_length=40)
@@ -98,7 +102,7 @@ class nat_rules(models.Model):
     # nat_rules defines the natting rules in the firewall, has 8 attributes
 
     # foreign key will be that of the firewall_practice
-    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE)
+    firewall_practice_id = models.ForeignKey(firewall_practice, on_delete=models.CASCADE, null=True)
 
     # nat_type: define the type of natting, can be either SNAT or DNAT
     # SNAT stands for static nat while DNAT stands for dynamic nat
@@ -129,4 +133,4 @@ class nat_rules(models.Model):
     #automatically update when changes
     pub_date = models.DateTimeField('date_published', auto_now=True)
 
-#class 
+    
