@@ -32,4 +32,6 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
 
     path('signin/', views.signin, name='signin'),
+
+    path('action/delete/<int:firewall_rules_id>', views.delete_entry, name='delete_entry'),
 ]

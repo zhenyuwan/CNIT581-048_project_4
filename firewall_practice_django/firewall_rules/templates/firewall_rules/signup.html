@@ -41,6 +41,7 @@
             {% else %}
             <form action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
+
                 <div class="container">
                   <label for="username"><b>Username</b></label>
                   <input type="text" placeholder="Enter Username" name="username" required>
@@ -50,6 +51,11 @@
               
                   <button type="submit">Register</button>
                 </div>
+
+                <!-- 
+                {{ form }} 
+                <button type="submit">Register</button>
+                -->
             </form>
         {% endif %}
         {% endblock %}

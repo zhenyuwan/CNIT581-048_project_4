@@ -1,7 +1,7 @@
 # app view page, can be under a project
 
 from multiprocessing import context
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse,HttpRequest
 from django.template import loader
 from django.template import RequestContext
@@ -11,6 +11,7 @@ from django.contrib.auth.models import User as authUser
 
 from .models import firewall_rules
 from .forms import get_firewall_rules
+from .forms import register_form
 
 
 def check_admin(user):
@@ -135,7 +136,7 @@ def signout(request):
     logout(request)
     print(request.user)
 
-    return redirect('/firewall_rules/pages/index')
+    return redirect('/pages/index')
 
 def signin(reqesut):
     if reqesut.method == "GET":
@@ -146,36 +147,50 @@ def signin(reqesut):
     if user is not None:
         login(request=reqesut, user=user)
         # Redirect to a success page.
-        return redirect('/firewall_rules/pages/index')
+        return redirect('/pages/index')
     else:
         # Return an 'invalid login' error message.
         return HttpResponse("Invalid Login")
 
 def signup(request):
-    # if the request is POST, which means that the request a submission form
+    # if the request is POST, which means that the request is a submission form
     if request.method == "POST":
-        
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            # check if the request include XMLHttpRequest header
-            # check if user account already exists
-            context = { "is_exist" : authUser.objects.all().filter(username=request.POST['username']).count() > 0 }
-            my_response = render(request, 'firewall_rules/signup.html', context)
-            return JsonResponse(context)
+        form = register_form(request.POST)
+        if authUser.objects.all().filter(username = request.POST['username']).exists():
+        #if form.is_valid():   
+            return HttpResponse('The username has been taken')
         else:
-            newAuthUser, created_auth = authUser.objects.get_or_create(username = request.POST['username'])
-            if created_auth:
-                # assign the POST form to database
-                newAuthUser.username=request.POST['username']
-                newAuthUser.set_password(request.POST['password'])
-                newAuthUser.save()
-            newUser = authUser.objects.get_or_create(user=newAuthUser)
-            user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-            if user is not None:
-                login(request, user)
-            print(user)
-            return redirect('/firewall_rules/pages/index')
+            # if form invalid, return to index page
+            username_post = request.POST['username']
+            password_post = request.POST['password']
+            authUser.objects.get_or_create(
+                username = username_post, 
+                password = password_post,
+                )
+            user = authenticate(username=username_post, password=password_post)
+            login(request=request, user=user)
+            return redirect('/signin')        
     else: 
         #if not POST, render original form
+        #form = register_form
+        #context = {
+        #    'form': form
+        #}
         my_response = render(request, 'firewall_rules/signup.html')
     
     return my_response
+
+def delete_entry(firewall_rules_id):
+    firewall_rules.objects.filter(pk=firewall_rules_id).delete()
+    return redirect("/pages/firewall_practice")
+
+def edit_entry(request,firewall_rules_id):
+    if request.method == "POST":
+        entry = get_object_or_404(get_firewall_rules, pk=firewall_rules_id)
+        form = get_firewall_rules(request.POST, instance=entry)
+        if form.is_valid():
+            form.save()
+            return redirect("/pages/firewall_practice")
+    return redirect("/pages/index")
+
+        

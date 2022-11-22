@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # include the views from firewall_rules app
-    path('firewall_rules/', include('firewall_rules.urls')),
+    path('', include('firewall_rules.urls')),
 ]

@@ -1,5 +1,6 @@
 from django import forms
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class get_firewall_rules(forms.Form):
     zone = forms.CharField(label='zone', max_length=40)
@@ -28,3 +29,14 @@ class get_firewall_rules(forms.Form):
 
     # Description: describe what this rule is for, does not have impact on if the rule matches
     description = forms.CharField(max_length=100)
+
+class register_form(forms.Form):
+    class Meta:
+        model = User
+        fields = ("username","password")
+        
+    def save(self, commit=True):
+        user = super(register_form, self).save(commit=False)
+        if commit:
+            user.save()
+        return user

@@ -75,6 +75,16 @@
                     <td> {{rule.destination_detail}} </td>
                     <td> {{rule.action}} </td>
                     <td> {{rule.description}} </td> 
+                    <td>
+                        <form action="/action/delete/{{ rule.id }}">
+                            <button type="submit" class="delete_button">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="">
+                            <button type="button" class="edit_button">Edit</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
