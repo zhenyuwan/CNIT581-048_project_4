@@ -11,8 +11,11 @@ class User(models.Model):
         return "ID:" + str(self.id) + ";" + str(self.user.email)    
 
 class firewall_practice(models.Model):
-    # has one to many relationship to firewall_rules, route_table, interface, nat_rules
-
+    # 1. has one to many relationship to firewall_rules, route_table, interface, nat_rules
+    # 2. has many to one relationship to User, once the user is deleted, the firewall practice
+    #    will be deleted too.
+    student_id = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    
     creation_date = models.DateTimeField(auto_now_add=True)
 
 class firewall_rules(models.Model):
@@ -51,6 +54,9 @@ class firewall_rules(models.Model):
 
     #automatically update when changes
     pub_date = models.DateTimeField('date_published', auto_now=True)
+
+    def get_zone(self):
+        return self.zone
 
     def __str__(self):
         return self.zone + ";" + self.direction + ";" + self.source_ip + ";" + self.source_detail + ";" + self.source_protocol + ";" + self.destination_ip + ";" + self.destination_detail + ";" + self.destination_protocol + ";" + self.description

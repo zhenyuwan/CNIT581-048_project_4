@@ -23,16 +23,31 @@
 
     <!--start of the nav bar-->
     <ul id="nav_bar">
-        <li><a href="index">Home Page</a></li>
-        <li><a href="terms">Firewall Terminologies</a></li>
-        <li><a href="subnet_practice">Subnet Practice</a></li>
-        <li><a href="firewall_practice">Firewall Practice</a></li>
-        <li><a href="playground">Playground</a></li>
+        <li><a href="{% url 'index' %}">Home Page</a></li>
+        <li><a href="{% url 'terms' %}">Firewall Terminologies</a></li>
+        <li><a href="{% url 'subnet_practice' %}">Subnet Practice</a></li>
+        <li><a href="{% url 'firewall_practice' %}">Firewall Practice</a></li>
+        <li><a href="{% url 'playground' %}">Playground</a></li>
     </ul>
     <!--End of the nav bar-->
 
     <!--start of Night mode button-->
     <button id="change_night_mode" type="button" onclick="change_night_mode()">Night</button>
+
+    <h3>Wikipedia Search</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        <input style='margin-left: 50px' type="text" name="search">
+        <button type="submit">Search</button>
+    </form>
+
+    
+    <p>
+    {% if result %}
+        {{result}}
+    {% endif %}
+    </p>
 
     <h3>Private A/B</h3>
 	<p>Private A/B are machines that are inside the firewall. They will have private addresses, 10.0.0.0 - 10.255.255.255; 172.16.0.0 - 172.31.255.255; 192.168.0.0 - 192.168.255.255</p>

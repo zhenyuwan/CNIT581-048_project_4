@@ -21,11 +21,11 @@
 
     <!--start of the nav bar-->
     <ul id="nav_bar">
-        <li><a href="index">Home Page</a></li>
-        <li><a href="terms">Firewall Terminologies</a></li>
-        <li><a href="subnet_practice">Subnet Practice</a></li>
-        <li><a href="firewall_practice">Firewall Practice</a></li>
-        <li><a href="playground">Playground</a></li>
+        <li><a href="{% url 'index' %}">Home Page</a></li>
+        <li><a href="{% url 'terms' %}">Firewall Terminologies</a></li>
+        <li><a href="{% url 'subnet_practice' %}">Subnet Practice</a></li>
+        <li><a href="{% url 'firewall_practice' %}">Firewall Practice</a></li>
+        <li><a href="{% url 'playground' %}">Playground</a></li>
     </ul>
     <!--End of the nav bar-->
 
@@ -37,6 +37,30 @@
         <p> {{ sample_string }} </p>
     </div>
     <!--End of the instruction-->
+
+    <div class="center_form">
+        {% block user_status %}        
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}.
+            <a href="{% url 'signout' %}">Sign Out</a>
+            </p>
+            {% else %}
+            <form action="{% url 'signin' %}" method="post">
+                {% csrf_token %}
+                <div class="container">
+                  <label for="username"><b>Username</b></label>
+                  <input type="text" placeholder="Enter Username" name="username" required>
+              
+                  <label for="password"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="password" required>
+              
+                  <button type="submit">Login</button>
+                </div>
+            </form>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+        {% endblock %}
+    </div>
 
     <!--Start of drawing Network Diagram-->
     <div class="network_diagram">

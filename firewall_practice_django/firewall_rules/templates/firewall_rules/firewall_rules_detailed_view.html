@@ -23,11 +23,11 @@
 
     <!--start of the nav bar-->
     <ul id="nav_bar">
-        <li><a href="index">Home Page</a></li>
-        <li><a href="terms">Firewall Terminologies</a></li>
-        <li><a href="subnet_practice">Subnet Practice</a></li>
-        <li><a href="firewall_practice">Firewall Practice</a></li>
-        <li><a href="playground">Playground</a></li>
+        <li><a href="{% url 'index' %}">Home Page</a></li>
+        <li><a href="{% url 'terms' %}">Firewall Terminologies</a></li>
+        <li><a href="{% url 'subnet_practice' %}">Subnet Practice</a></li>
+        <li><a href="{% url 'firewall_practice' %}" >Firewall Practice</a></li>
+        <li><a href="{% url 'playground' %}">Playground</a></li>
     </ul>
     <!--End of the nav bar-->
 

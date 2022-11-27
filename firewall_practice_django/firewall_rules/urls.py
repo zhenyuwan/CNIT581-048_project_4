@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('pages/terms', views.get_page_terms, name='terms'),
 
-    path('pages/firewall_practice', views.get_input_firewall_rules, name='firewall_practice'),
+    path('pages/<int:practice_id>/firewall_practice', views.get_input_firewall_rules, name='firewall_practice'),
 
     path('pages/subnet_practice', views.get_page_subnet_practice, name='subnet_practice'),
 
@@ -34,4 +34,6 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
 
     path('action/delete/<int:firewall_rules_id>', views.delete_entry, name='delete_entry'),
+
+    path('pages/firewall_practice/<int:firewall_rules_id>', views.edit_entry, name='edit_entry'),
 ]

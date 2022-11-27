@@ -2,17 +2,19 @@
 
 from multiprocessing import context
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse,HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User as authUser
+from django.contrib import messages
 
 from .models import firewall_rules
 from .forms import get_firewall_rules
 from .forms import register_form
 
+import wikipedia
 
 def check_admin(user):
    return user.is_superuser
@@ -33,7 +35,15 @@ def get_page_index(request):
 def get_page_terms(request):
     template = loader.get_template('firewall_rules/terms.html')
     context = {}
-    return HttpResponse(template.render(context,request))
+    if request.method == "POST":
+        search = request.POST['search']
+        try:
+            result = wikipedia.summary(search,sentences = 10) #No of sentences that you want as output
+        except:
+            return HttpResponse("Wrong Input")
+        return render(request,"firewall_rules/terms.html",{"result":result})
+    
+    return HttpResponse(template.render(context, request))
 
 def get_page_firewall_practice(request):
     template = loader.get_template('firewall_rules/firewall_practice.html')
@@ -54,13 +64,14 @@ def get_page_subnet_practice(request):
     return HttpResponse(template.render(context,request))
 
 # add view
-@staff_member_required
-def get_input_firewall_rules(request):
+def get_input_firewall_rules(request, practice_id):
     
     template = loader.get_template('firewall_rules/firewall_practice_django.html')
-    # if the user access the form after the first time, use POST to populate the form
-    rules = firewall_rules.objects.all()        
+    
+    # retrieve the firewall_rules object with foreign key specified by practice_id
+    rules = firewall_rules.objects.all().filter(firewall_practice_id = practice_id)        
 
+    # if the user access the form after the first time, use POST to populate the form
     if request.method == 'POST':
         form = get_firewall_rules(request.POST)
         if form.is_valid():
@@ -153,32 +164,22 @@ def signin(reqesut):
         return HttpResponse("Invalid Login")
 
 def signup(request):
-    # if the request is POST, which means that the request is a submission form
-    if request.method == "POST":
+    if request.method == 'POST':
         form = register_form(request.POST)
-        if authUser.objects.all().filter(username = request.POST['username']).exists():
-        #if form.is_valid():   
-            return HttpResponse('The username has been taken')
-        else:
-            # if form invalid, return to index page
-            username_post = request.POST['username']
-            password_post = request.POST['password']
-            authUser.objects.get_or_create(
-                username = username_post, 
-                password = password_post,
-                )
-            user = authenticate(username=username_post, password=password_post)
-            login(request=request, user=user)
-            return redirect('/signin')        
-    else: 
-        #if not POST, render original form
-        #form = register_form
-        #context = {
-        #    'form': form
-        #}
-        my_response = render(request, 'firewall_rules/signup.html')
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/pages/index')
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    else:
+        form = register_form()
     
-    return my_response
+    context = {
+        'form' : form,
+    }
+    template = loader.get_template('firewall_rules/signup.html')
+
+    return HttpResponse(template.render(context, request))
 
 def delete_entry(firewall_rules_id):
     firewall_rules.objects.filter(pk=firewall_rules_id).delete()
@@ -186,11 +187,38 @@ def delete_entry(firewall_rules_id):
 
 def edit_entry(request,firewall_rules_id):
     if request.method == "POST":
-        entry = get_object_or_404(get_firewall_rules, pk=firewall_rules_id)
+        entry = get_object_or_404(firewall_rules, pk=firewall_rules_id)
         form = get_firewall_rules(request.POST, instance=entry)
         if form.is_valid():
             form.save()
             return redirect("/pages/firewall_practice")
-    return redirect("/pages/index")
+    
+    # if Get request is being used, call get_input_firewall_rules to
+    # render the /pages/firewall_practice webpage
+        
+    template = loader.get_template('firewall_rules/firewall_practice_django.html')
+    rules = firewall_rules.objects.all()
+
+    # Populate the form with the data of the firewall rule that is about to be edited
+    current_rule = firewall_rules.objects.all().filter(pk=firewall_rules_id)
+    form = get_firewall_rules(initial={
+        'zone': current_rule.values_list('zone', flat=True).first(),
+        'direction': current_rule.values_list('direction', flat=True).first(),
+        'source_ip': current_rule.values_list('source_ip', flat=True).first(),
+        'source_protocol': current_rule.values_list('source_protocol', flat=True).first(),
+        'source_detail': current_rule.values_list('source_detail', flat=True).first(),
+        'destination_ip': current_rule.values_list('destination_ip', flat=True).first(),
+        'destination_protocol': current_rule.values_list('destination_protocol', flat=True).first(),
+        'destination_detail': current_rule.values_list('destination_detail', flat=True).first(),
+        'action': current_rule.values_list('action', flat=True).first(),
+        'description': current_rule.values_list('description', flat=True).first(),
+    })
+
+    context = {
+    'form' : form,
+    'firewall_rules' : rules,
+    }
+    return HttpResponse(template.render(context, request))
+
 
         
