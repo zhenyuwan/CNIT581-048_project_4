@@ -1,6 +1,5 @@
 from ipaddress import ip_address
 from pyexpat import model
-from turtle import pu
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User

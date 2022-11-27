@@ -64,12 +64,12 @@ def get_page_subnet_practice(request):
     return HttpResponse(template.render(context,request))
 
 # add view
-def get_input_firewall_rules(request, practice_id):
+def get_input_firewall_rules(request):
     
     template = loader.get_template('firewall_rules/firewall_practice_django.html')
     
     # retrieve the firewall_rules object with foreign key specified by practice_id
-    rules = firewall_rules.objects.all().filter(firewall_practice_id = practice_id)        
+    # rules = firewall_rules.objects.all().filter(firewall_practice_id = practice_id)        
 
     # if the user access the form after the first time, use POST to populate the form
     if request.method == 'POST':
@@ -102,10 +102,13 @@ def get_input_firewall_rules(request, practice_id):
             form = get_firewall_rules()
     else:
         form = get_firewall_rules()
-
+    
+    rules = firewall_rules.objects.all()
+    
     context = {
         'form' : form,
         'firewall_rules' : rules,
+        'instruction' : "You can enter data in the following boxes"
     }
 
     return HttpResponse(template.render(context, request))
@@ -181,7 +184,7 @@ def signup(request):
 
     return HttpResponse(template.render(context, request))
 
-def delete_entry(firewall_rules_id):
+def delete_entry(request, firewall_rules_id):
     firewall_rules.objects.filter(pk=firewall_rules_id).delete()
     return redirect("/pages/firewall_practice")
 
@@ -215,8 +218,9 @@ def edit_entry(request,firewall_rules_id):
     })
 
     context = {
-    'form' : form,
-    'firewall_rules' : rules,
+        'form' : form,
+        'firewall_rules' : rules,
+        'instruction' : "You can edit the existing firewall rules",
     }
     return HttpResponse(template.render(context, request))
 

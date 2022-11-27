@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('pages/terms', views.get_page_terms, name='terms'),
 
-    path('pages/<int:practice_id>/firewall_practice', views.get_input_firewall_rules, name='firewall_practice'),
+    path('pages/firewall_practice', views.get_input_firewall_rules, name='firewall_practice'),
 
     path('pages/subnet_practice', views.get_page_subnet_practice, name='subnet_practice'),
 
