@@ -37,16 +37,24 @@ User will need to install sqlite database to run the program.
 An admin user has been configured:
 
 Username: admin
+
 Password: admin
 
 After unzip the file, in the directory project3/firewall_practice_django/, run the command
+
 *pip3 install wikipedia*
+
 to install the wikipedia module for the **API**
+
 then run the command
+
 *python manage.py runserver*
+
 to start the test server
+
 Access the home page in http://localhost:8000/firewall_rules/pages/index
 
 ## Hosted Version
 Access the django development server at:
+
 http://3.133.247.115:8000/pages/index
