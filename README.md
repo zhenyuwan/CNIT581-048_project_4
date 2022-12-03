@@ -52,7 +52,7 @@ then run the command
 
 to start the test server
 
-Access the home page in http://localhost:8000/firewall_rules/pages/index
+Access the home page in http://localhost:8000/pages/index
 
 ## Hosted Version
 Access the django development server at:
